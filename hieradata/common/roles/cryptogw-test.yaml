@@ -1,3 +1,4 @@
+---
 named_interfaces::config:
   mgmt:
      - eth0
