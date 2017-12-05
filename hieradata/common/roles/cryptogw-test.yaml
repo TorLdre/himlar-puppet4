@@ -1,0 +1,7 @@
+named_interfaces::config:
+  mgmt:
+     - eth0
+  trp:
+     - eth1
+  public:
+     - eth2
