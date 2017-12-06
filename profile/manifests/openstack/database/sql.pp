@@ -31,8 +31,8 @@ class profile::openstack::database::sql (
     #FIXME nova puppet module creates database in ocata
     if $create_cell0 {
 
-      $addr1 = hiera('netcfg_trp_netpart')
-      $addr2 = hiera('domain_trp')
+      $addr1 = lookup('netcfg_trp_netpart', String, 'first', '')
+      $addr2 = lookup('domain_trp', String, 'first', '')
 
       mysql_database { 'nova_cell0':
         ensure    => present,

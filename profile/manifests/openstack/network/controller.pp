@@ -18,7 +18,7 @@ class profile::openstack::network::controller(
     Openstacklib::Policy::Base {
       file_path => $neutron_policy_path,
     }
-    $policy = hiera('profile::openstack::network::policies', {})
+    $policy = lookup('profile::openstack::network::policies', Hash, 'deep', {})
     create_resources('openstacklib::policy::base', $policy)
                 #{ require => Class[::neutron::server] })
   }

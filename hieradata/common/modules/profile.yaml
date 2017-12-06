@@ -1,5 +1,6 @@
 ---
-profile::base::common::manage_augeasproviders: true
+# Is this still needed?
+# profile::base::common::manage_augeasproviders: true
 profile::base::common::manage_epel:            false
 profile::base::common::manage_accounts:        true
 profile::base::common::manage_logging:         false
