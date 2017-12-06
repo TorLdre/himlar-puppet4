@@ -5,7 +5,7 @@ set_certname()
   # Set default certname
   certname="vagrant-base-dev.himlar.local"
   # Use certname from puppet.conf if it is present
-  grep -q certname /etc/puppetlabs/puppet/puppet.conf && certname="$(puppet config print certname)"
+  grep -q certname /etc/puppetlabs/puppet/puppet.conf && certname="$(/opt/puppetlabs/puppet/bin/puppet config print certname)"
   # Override with certname from env var if present
   certname="${HIMLAR_CERTNAME:-$certname}"
 }

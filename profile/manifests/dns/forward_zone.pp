@@ -1,4 +1,5 @@
 define profile::dns::forward_zone($zone, $filename) {
+  $ns1_public_addr = $::profile::dns::ns::ns1_public_addr
 
   # Our name servers
   $name_servers = lookup('profile::dns::ns::name_servers', Array, 'deep', [])
