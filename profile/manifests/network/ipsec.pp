@@ -61,7 +61,7 @@ class profile::network::ipsec(
     exec { 'disable_rp_filter':
       command     => 'bash -c \'for interfaces in $(ls /proc/sys/net/ipv4/conf/) ; do echo "0" > /proc/sys/net/ipv4/conf/$interfaces/rp_filter ; done\'',
       path        => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
-      unless      => 'bash -c \'if [ $(cat /proc/sys/net/ipv4/conf/default/rp_filter) == "1" ]; then echo "satt på" ; fi\'',
+      unless      => 'bash -c \'if [ $(cat /proc/sys/net/ipv4/conf/default/rp_filter) == "1" ]; \'',
     }
   }
 
