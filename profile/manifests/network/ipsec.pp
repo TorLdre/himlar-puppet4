@@ -28,11 +28,21 @@ class profile::network::ipsec(
         proto    => 'esp',
 #        iniface => $::ipaddress_trp1,
       }
+      profile::firewall::rule { "916 ipsec allow protocol AH":
+        proto    => 'esp',
+#        iniface => $::ipaddress_trp1,
+      }
       profile::firewall::rule { "915 ipsec allow protocol ESP IPv6":
         proto    => 'esp',
         provider => 'ip6tables',
 #        iniface => $::ipaddress_trp1,
       }
+      profile::firewall::rule { "916 ipsec allow protocol AH":
+        proto    => 'esp',
+        provider => 'ip6tables',
+#        iniface => $::ipaddress_trp1,
+      }
+
     }
   }
 
