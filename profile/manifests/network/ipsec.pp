@@ -52,10 +52,17 @@ class profile::network::ipsec(
     }
     # Disable ICMP redirects
     sysctl::value { "net.ipv4.conf.all.send_redirects":
-      value => 1,
+      value => 0,
+    }
+    sysctl::value { "net.ipv4.conf.default.accept_redirects":
+      value => 0,
     }
     # Disable reverse path filtering
-    
+    exec { 'disable_rp_filter':
+      command     => 'bash -c \'for interfaces in $(ls /proc/sys/net/ipv4/conf/) ; do echo "0" > /proc/sys/net/ipv4/conf/$interfaces/rp_filter ; done\'',
+      path        => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
+      unless      => 'bash -c \'if [ $(cat /proc/sys/net/ipv4/conf/default/rp_filter) == "1" ]; then echo "satt på" ; fi\'',
+    }
   }
 
 }
