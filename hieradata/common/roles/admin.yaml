@@ -30,6 +30,8 @@ puppet::dns_alt_names:
   - "puppetca.%{hiera('domain_mgmt')}"
   - "admin.%{hiera('domain_mgmt')}"
 
+profile::application::puppet_master::passenger_enable: false
+
 profile::webserver::apache::manage_firewall:  false
 profile::webserver::apache::vhosts:
   'repo':

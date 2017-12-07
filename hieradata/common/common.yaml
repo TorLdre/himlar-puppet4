@@ -17,7 +17,7 @@ location_description: unset
 location_environment: unset
 location_tag:         unset
 
-bgp_as:                 '65535'
+bgp_as:               '65535'
 
 domain_frontend:      "%{::domain}"
 domain_public:        "%{::domain}"
@@ -61,6 +61,7 @@ allow_from_network:
   - '129.177.10.189/32'  # tor
   - '129.177.10.212/32'  # raymond
   - '129.177.10.111/32'  # anders
+  - '129.240.202.64/32'  # usit
   - '158.36.0.0/16'      # UiA
   - '128.39.0.0/16'      # UiA
   - '158.37.216.0/21'    # UiA
@@ -112,7 +113,6 @@ public__address__access:          "access.%{hiera('domain_frontend')}"
 public__address__console:         "console.%{hiera('domain_public')}"
 
 # DNS servers
-public__address__ns_01:           "%{hiera('netcfg_public_netpart')}.16"
 public__name__ns_01:              "ns.%{hiera('domain_public')}"
 
 #
@@ -126,6 +126,7 @@ service__address__rabbitmq_02:    "mq01.%{hiera('domain_trp')}"
 service__address__rabbitmq_03:    "mq01.%{hiera('domain_trp')}"
 service__address__cinder_ip:      "%{hiera('netcfg_trp_netpart')}.46"
 service__address__consoleproxy:
+service__address__metric:         "metric.%{hiera('domain_trp')}"
 service__address__ns_01:          "%{hiera('netcfg_trp_netpart')}.16"
 service__address__ns_02:          "%{hiera('netcfg_trp_netpart')}.17"
 
@@ -159,6 +160,9 @@ endpoint__image__public:          "https://image.api.%{hiera('domain_public')}:9
 endpoint__network__admin:         "http://network.%{hiera('domain_trp')}:9696"
 endpoint__network__internal:      "http://network.%{hiera('domain_trp')}:9696"
 endpoint__network__public:        "https://network.api.%{hiera('domain_public')}:9696"
+endpoint__metric__admin:          "http://metric.%{hiera('domain_trp')}:8041"
+endpoint__metric__internal:       "http://metric.%{hiera('domain_trp')}:8041"
+endpoint__metric__public:         "https://metric.api.%{hiera('domain_public')}:8041"
 
 #
 # DNS (merge of this and location)
@@ -193,6 +197,7 @@ profile::network::services::dns_records:
     "%{::location}-cephmon-01.%{hiera('domain_mgmt')}":     "%{hiera('netcfg_mgmt_netpart')}.91"
     "%{::location}-cephmon-02.%{hiera('domain_mgmt')}":     "%{hiera('netcfg_mgmt_netpart')}.92"
     "%{::location}-cephmon-03.%{hiera('domain_mgmt')}":     "%{hiera('netcfg_mgmt_netpart')}.93"
+    "%{::location}-metric-01.%{hiera('domain_mgmt')}":      "%{hiera('netcfg_mgmt_netpart')}.96"
     "%{::location}-controller-01.%{hiera('domain_mgmt')}":  "%{hiera('netcfg_mgmt_netpart')}.100"
     "%{::location}-controller-02.%{hiera('domain_mgmt')}":  "%{hiera('netcfg_mgmt_netpart')}.101"
     "%{::location}-controller-03.%{hiera('domain_mgmt')}":  "%{hiera('netcfg_mgmt_netpart')}.102"
@@ -210,6 +215,8 @@ profile::network::services::dns_records:
     "%{::location}-controller-04.%{hiera('domain_mgmt')}":  "%{hiera('netcfg_mgmt_netpart')}.114"
     "%{::location}-compute-07.%{hiera('domain_mgmt')}":     "%{hiera('netcfg_mgmt_netpart')}.115"
     "%{::location}-compute-08.%{hiera('domain_mgmt')}":     "%{hiera('netcfg_mgmt_netpart')}.116"
+    "%{::location}-compute-09.%{hiera('domain_mgmt')}":     "%{hiera('netcfg_mgmt_netpart')}.117"
+    "%{::location}-compute-10.%{hiera('domain_mgmt')}":     "%{hiera('netcfg_mgmt_netpart')}.118"
     # mgmt
     "foreman.%{hiera('domain_mgmt')}":                      "%{hiera('netcfg_mgmt_netpart')}.11"
     "puppet.%{hiera('domain_mgmt')}":                       "%{hiera('netcfg_mgmt_netpart')}.11"
@@ -229,7 +236,7 @@ profile::network::services::dns_records:
     "compute.%{hiera('domain_trp')}":                       "%{hiera('netcfg_trp_netpart')}.86"
     "network.%{hiera('domain_trp')}":                       "%{hiera('netcfg_trp_netpart')}.86"
     "identity.%{hiera('domain_trp')}":                      "%{hiera('netcfg_trp_netpart')}.86"
-
+    "metric.%{hiera('domain_trp')}":                        "%{hiera('netcfg_trp_netpart')}.96"
 
 #
 # Network configuration data

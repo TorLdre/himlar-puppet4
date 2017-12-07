@@ -24,9 +24,9 @@ class profile::openstack::compute::consoleproxy(
       ''      => $hiera_allow_from_network,
       default => $allow_from_network
     }
+
     profile::firewall::rule { '222 nova-proxy accept tcp':
       port   => $port,
-      source => $source,
       extras => $firewall_extras
     }
   }

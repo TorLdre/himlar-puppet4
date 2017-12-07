@@ -20,7 +20,7 @@ mod 'lvm', :ref => '1.0.0',                         :git => github + 'puppetlabs
 mod 'firewall', :ref => '1.8.2',                    :git => github + 'puppetlabs/puppetlabs-firewall'
 mod 'kmod', :ref => '2.2.0',                        :git => github + 'camptocamp/puppet-kmod'
 mod 'named_interfaces', :ref => '88ce713994',       :git => github + 'norcams/puppet-named_interfaces'
-mod 'network', :ref => 'v3.3.9',                    :git => github + 'example42/puppet-network'
+mod 'network', :ref => '40f84826a8',             :git => github + 'norcams/puppet-network'
 mod 'ipmi', :ref => 'c4309504fd',                   :git => github + 'norcams/puppet-ipmi'
 mod 'lldp', :ref => '1208d86c05',                   :git => github + 'mfournier/puppet-lldp'
 # mod 'apt', :ref => '2.2.2',                         :git => github + 'puppetlabs/puppetlabs-apt'
@@ -82,7 +82,9 @@ mod 'voxpupuli/r10k', :ref => 'v6.2.0',             :git => github + 'voxpupuli/
 mod 'theforeman/foreman', :ref => '8.1.1',          :git => github + 'theforeman/puppet-foreman.git'
 # mod 'theforeman/concat_native', '1.5.0'             # forge replace with puppetlabs-concat (further down)
 mod 'theforeman/tftp', :ref => '3.0.2',             :git => github + 'theforeman/puppet-tftp'
-mod 'theforeman/puppet', :ref => '8.0.4',           :git => github + 'theforeman/puppet-puppet.git'
+mod 'theforeman/puppet', :ref => '0946aab48e',      :git => github + 'theforeman/puppet-puppet.git'
+mod 'puppetlabs/hocon', :ref => '1.0.0',            :git => github + 'puppetlabs/puppetlabs-hocon'
+mod 'puppetlabs/puppet_authorization', :ref => '0.4.0', :git => github + 'puppetlabs/puppetlabs-puppet_authorization'
 mod 'theforeman/dns', :ref => '5.0.1',              :git => github + 'theforeman/puppet-dns'
 mod 'theforeman/dhcp', :ref => '3.1.1-norcams',     :git => github + 'norcams/puppet-dhcp.git'
 mod 'theforeman/foreman_proxy', :ref => '6.0.3',    :git => github + 'theforeman/puppet-foreman_proxy.git'
@@ -153,6 +155,7 @@ mod 'neutron', :ref => '9.5.0',                     :git => github + 'openstack/
 mod 'nova', :ref => '9.6.0',                        :git => github + 'openstack/puppet-nova'
 mod 'horizon', :ref => '9.6.0',                     :git => github + 'openstack/puppet-horizon'
 mod 'keystone', :ref => 'norcams/newton',           :git => github + 'norcams/puppet-keystone'
+mod 'gnocchi', :ref => '9.5.0',                  :git => github + 'openstack/puppet-gnocchi'
 
 mod 'oslo', :ref => '9.5.0',                        :git => github + 'openstack/puppet-oslo'
 mod 'openstacklib', :ref => '9.5.0',                :git => github + 'openstack/puppet-openstacklib'
