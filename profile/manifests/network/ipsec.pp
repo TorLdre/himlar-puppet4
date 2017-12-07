@@ -37,7 +37,7 @@ class profile::network::ipsec(
         provider => 'ip6tables',
 #        iniface => $::ipaddress_trp1,
       }
-      profile::firewall::rule { "916 ipsec allow protocol AH":
+      profile::firewall::rule { "916 ipsec allow protocol AH IPv6":
         proto    => 'ah',
         provider => 'ip6tables',
 #        iniface => $::ipaddress_trp1,
