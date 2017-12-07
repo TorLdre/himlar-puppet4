@@ -10,9 +10,10 @@ network::interfaces_hash:
     dns1:           "%{hiera('netcfg_dns_server1')}"
     dns2:           "%{hiera('netcfg_dns_server2')}"
     domain:         "%{hiera('netcfg_dns_search')}"
-    domain:         "%{hiera('netcfg_dns_search')}"
   'eth1':
     ipaddress:      "%{hiera('netcfg_trp_netpart')}.17"
     netmask:        "%{hiera('netcfg_trp_netmask')}"
     defroute:       'no'
     mtu:            '1500'
+
+yum_base_mirror:    'https://download.iaas.uio.no/uh-iaas/test'
