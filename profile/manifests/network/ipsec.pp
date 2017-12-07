@@ -42,8 +42,20 @@ class profile::network::ipsec(
         provider => 'ip6tables',
 #        iniface => $::ipaddress_trp1,
       }
-
     }
+    # Enable IP forwarding
+    sysctl::value { "net.ipv4.ip_forward":
+      value => 1,
+    }
+    sysctl::value { "net.ipv6.conf.all.forwarding":
+      value => 1,
+    }
+    # Disable ICMP redirects
+    sysctl::value { "net.ipv4.conf.all.send_redirects":
+      value => 1,
+    }
+    # Disable reverse path filtering
+    
   }
 
 }
