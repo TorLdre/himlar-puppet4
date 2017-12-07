@@ -17,11 +17,11 @@ class profile::network::ipsec(
     if $manage_firewall {
       profile::firewall::rule { '914 ipsec allow IKE':
         proto    => 'udp',
-        port     => ['500','4500'],
+        dport     => ['500','4500'],
       }
       profile::firewall::rule { '914 ipsec allow IKE IPv6':
         proto    => 'udp',
-        port     => ['500','4500'],
+        dport     => ['500','4500'],
         provider => 'ip6tables',
       }
       profile::firewall::rule { "915 ipsec allow protocol ESP":
