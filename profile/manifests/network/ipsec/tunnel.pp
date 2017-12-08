@@ -9,7 +9,7 @@ define profile::network::ipsec::tunnel (
   $config_dir       = '/etc/ipsec.d',
 ) {
 
-  file { ${name}.secrets:
+  file { "$name.secrets":
     ensure   => present,
     mode     => '0600',
     owner    => 'root',
@@ -18,7 +18,7 @@ define profile::network::ipsec::tunnel (
     content  => template("${module_name}/network/ipsec_secret.erb"),
     notify   => Service['ipsec']
   }
-  file { ${name}.secrets:
+  file { "$name.conf":
     ensure   => present,
     mode     => '0600',
     owner    => 'root',
