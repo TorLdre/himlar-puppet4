@@ -7,25 +7,25 @@ define profile::network::ipsec::tunnel (
   $authby           = "secret",
   $auto             = "add", # Use "start" for production tunnels
   $config_dir       = '/etc/ipsec.d',
+  $psk              = undef,
 ) {
 
-  file { "$name.secrets":
+  file { "${name}.secrets":
     ensure   => present,
     mode     => '0600',
     owner    => 'root',
     group    => 'root',
-    path     => "${config_dir}",
+    path     => "${config_dir}/${name}.secrets",
     content  => template("${module_name}/network/ipsec_secret.erb"),
     notify   => Service['ipsec']
   }
-  file { "$name.conf":
+  file { "{$name}.conf":
     ensure   => present,
     mode     => '0600',
     owner    => 'root',
     group    => 'root',
-    path     => "${config_dir}",
+    path     => "${config_dir}/${name}.conf",
     content  => template("${module_name}/network/ipsec_tunnel.erb"),
     notify   => Service['ipsec']
- }
-
+  }
 }
