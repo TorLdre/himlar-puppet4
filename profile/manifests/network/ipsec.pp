@@ -64,7 +64,7 @@ class profile::network::ipsec(
       unless      => 'bash -c \'if [ $(cat /proc/sys/net/ipv4/conf/default/rp_filter) == "1" ]; then exit 1 ; fi; \'',
     }
     # Create the connections
-    create_resources(tunnel, lookup('profile::base::network::ipsec::tunnels', Hash, 'deep', {}))
+    create_resources(profile::network::ipsec::tunnel, lookup('profile::network::ipsec::tunnels', Hash, 'deep', {}))
   }
 
 }
