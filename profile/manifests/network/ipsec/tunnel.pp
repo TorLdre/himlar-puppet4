@@ -10,6 +10,14 @@ define profile::network::ipsec::tunnel (
   $psk              = undef,
 ) {
 
+  # Preshared key kan be given as $psk in original hash, og given as secret with
+  # the variable name psk-${name-of-tunnel}
+  unless $psk {
+    $psk_real = lookup("profile::network::ipsec::tunnel::psk-${name}", Data, 'deep')
+  } else {
+    $psk_real = $psk
+  }
+
   file { "${name}.secrets":
     ensure   => present,
     mode     => '0600',
