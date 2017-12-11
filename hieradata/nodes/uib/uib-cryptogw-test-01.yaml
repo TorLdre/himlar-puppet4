@@ -17,3 +17,9 @@ network::interfaces_hash:
     mtu:            '1500'
 
 yum_base_mirror:    'https://download.iaas.uio.no/uh-iaas/test'
+
+profile::network::ipsec::tunnels:
+  'uib-cryptogw-test':
+    left:  '172.33.0.16'
+    right: '172.33.0.17'
+    # psk: "" # Taken from secrets
