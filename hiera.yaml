@@ -8,8 +8,8 @@ defaults:
 hierarchy:
   - name: "Secret data"
     paths:
-      - "secrets/nodes/%{::verified_host}.secrets"
-      - "secrets/%{::location}-common.secrets"
+      - "secrets/nodes/%{::verified_host}.secrets.yaml"
+      - "secrets/%{::location}-common.secrets.yaml"
 
   - name: "Nodes"
     paths:

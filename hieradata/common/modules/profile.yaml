@@ -104,7 +104,7 @@ profile::base::yumrepo::repo_hash:
   puppetlabs:
     descr:          Puppetlabs Yum Repo
     baseurl:        "%{hiera('yum_base_mirror')}/puppetlabs-PC1/"
-    gpgkey:         "%{hiera('yum_base_mirror')}/puppetlabs/RPM-GPG-KEY-puppet"
+    gpgkey:         "%{hiera('yum_base_mirror')}/puppetlabs-PC1/RPM-GPG-KEY-puppet"
     gpgcheck:       1
   puppetlabs-deps:
     descr:          Puppetlabs Dependencies Yum Repo

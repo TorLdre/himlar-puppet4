@@ -1,0 +1,16 @@
+---
+network::interfaces_hash:
+  'eth0':
+    ipaddress: '172.28.32.18'
+    netmask:   '255.255.255.0'
+    gateway:   "%{hiera('netcfg_mgmt_gateway')}"
+    mtu:       '1500'
+    defroute:  'yes'
+
+profile::network::services::manage_dns_records: true
+profile::network::services::manage_dhcp_rsvs:   true
+
+foreman_proxy::tftp: false
+foreman_proxy::dhcp: false
+foreman_proxy::dns:  false
+foreman_proxy::bmc:  false
