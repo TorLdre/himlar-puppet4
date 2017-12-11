@@ -18,3 +18,9 @@ network::interfaces_hash:
     netmask:        "%{hiera('netcfg_trp_netmask')}"
     defroute:       'no'
     mtu:            '1500'
+
+profile::network::ipsec::tunnels:
+  'uib-cryptogw':
+    left:  '172.33.0.15'
+    right: '172.33.0.250'
+    auto:  'start'
