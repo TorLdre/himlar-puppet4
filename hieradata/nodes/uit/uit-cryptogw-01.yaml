@@ -24,3 +24,4 @@ profile::network::ipsec::tunnels:
     left:  '172.33.0.15'
     right: '172.33.0.250'
     auto:  'start'
+    phase2alg: 'aes_gcm256-null;modp4096'
