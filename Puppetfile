@@ -19,8 +19,8 @@ mod 'resolv_conf', :ref => 'v3.3.0',                :git => github + 'saz/puppet
 mod 'lvm', :ref => '1.0.0',                         :git => github + 'puppetlabs/puppetlabs-lvm'
 mod 'firewall', :ref => '1.8.2',                    :git => github + 'puppetlabs/puppetlabs-firewall'
 mod 'kmod', :ref => '2.2.0',                        :git => github + 'camptocamp/puppet-kmod'
-mod 'named_interfaces', :ref => '88ce713994',       :git => github + 'norcams/puppet-named_interfaces'
-mod 'network', :ref => '40f84826a8',                :git => github + 'norcams/puppet-network'
+mod 'named_interfaces', :ref => '12482fc5c3',       :git => github + 'norcams/puppet-named_interfaces'
+mod 'network', :ref => '40f84826a8',             :git => github + 'norcams/puppet-network'
 mod 'ipmi', :ref => 'v2.3.0',                       :git => github + 'jhoblitt/puppet-ipmi'
 mod 'lldp', :ref => '1208d86c05',                   :git => github + 'mfournier/puppet-lldp'
 # mod 'apt', :ref => '2.2.2',                         :git => github + 'puppetlabs/puppetlabs-apt'
@@ -45,7 +45,7 @@ mod 'quagga', :ref => '4f7cac717c',                 :git => github + 'norcams/pu
 # profile::network::
 #
 mod 'bird', :ref => '1.1.0',                        :git => github + 'sbadia/puppet-bird'
-mod 'calico', :ref => 'fad10cac71',                 :git => github + 'norcams/puppet-calico'
+mod 'calico', :ref => 'badc751a44',                 :git => github + 'norcams/puppet-calico'
 mod 'dnsmasq', :ref => 'v1.3.1',                    :git => github + 'saz/puppet-dnsmasq'
 mod 'ipcalc', :ref => '2.2.0',                      :git => github + 'inkblot/puppet-ipcalc'
 mod 'tinyproxy', :ref => 'ef4a8b0bb2',              :git => github + 'earsdown/puppet-tinyproxy'
@@ -69,7 +69,7 @@ mod 'consul', :ref => 'v3.1.2',                     :git => github + 'solarkenne
 #
 # profile::application::dpapp
 #
-mod 'dpapp', :ref => '1.2',                         :git => github + 'norcams/puppet-dpapp'
+mod 'dpapp', :ref => '1.3',                      :git => github + 'norcams/puppet-dpapp'
 
 #
 # profile::application::git
@@ -99,7 +99,7 @@ mod 'bind', :ref => 'keyfile_resource_record',      :git => github + 'norcams/pu
 #
 # bootstrap
 #
-mod 'himlar_bootstrap', :ref => '1.0.0',            :git => github + 'norcams/puppet-himlar_bootstrap'
+mod 'himlar_bootstrap', :ref => '1.0.1',            :git => github + 'norcams/puppet-himlar_bootstrap'
 
 #
 # profile::logging
@@ -145,6 +145,7 @@ mod 'galera_arbitrator', :ref => '1.0.4',           :git => github + 'jadestorm/
 #
 mod 'erlang', :ref => '23fb75b8b1',                 :git => github + 'garethr/garethr-erlang'
 mod 'rabbitmq', :ref => 'v8.0.0',                   :git => github + 'voxpupuli/puppetlabs-rabbitmq'
+mod 'archive', :ref => 'v2.2.0',                    :git => github + 'voxpupuli/puppet-archive'
 
 #
 # profile::openstack::*
@@ -162,11 +163,12 @@ mod 'openstacklib', :ref => '9.5.0',                :git => github + 'openstack/
 mod 'openstack_extras', :ref => '9.5.0',            :git => github + 'openstack/puppet-openstack_extras'
 mod 'sysctl', :ref => 'v0.0.11',                    :git => github + 'duritong/puppet-sysctl'
 mod 'memcached', :ref => 'v3.0.2',                  :git => github + 'saz/puppet-memcached'
+mod 'rsync', :ref => '0.4.0',                       :git => github + 'puppetlabs/puppetlabs-rsync'
 
 #
 # libvirt
 #
-mod 'libvirt', :ref => '0.3.2-norcams2',            :git => github + 'norcams/puppet-libvirt'
+mod 'libvirt', :ref => '5f55fb66db',                :git => github + 'norcams/puppet-libvirt'
 
 #
 # ceph

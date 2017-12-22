@@ -1,5 +1,5 @@
 def lspci_match(regex)
-  output = Facter::Core::Execution.execute("lspci 2>/dev/null", timeout: 30)
+  output = Facter::Core::Execution.execute("which lspci && lspci 2>/dev/null", timeout: 30)
   matches = output.scan(regex)
   matches.flatten.reject {|s| s.nil?}.length
 end

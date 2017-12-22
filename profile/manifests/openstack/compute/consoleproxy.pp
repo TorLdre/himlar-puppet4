@@ -18,7 +18,7 @@ class profile::openstack::compute::consoleproxy(
 
 
   if $manage_firewall {
-    $hiera_allow_from_network = lookup('allow_from_network', Array, 'deep', undef)
+    $hiera_allow_from_network = lookup('allow_from_network', Array, 'unique', undef)
     $source = $allow_from_network? {
       undef   => $hiera_allow_from_network,
       ''      => $hiera_allow_from_network,

@@ -19,3 +19,5 @@ network::interfaces_hash:
     ipaddress: "%{hiera('netcfg_public_netpart')}.250"
     netmask:   '255.255.255.255'
     defroute:  'no'
+
+puppet::puppetmaster: "puppet4.%{hiera('domain_mgmt')}"

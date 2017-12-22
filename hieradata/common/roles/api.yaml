@@ -23,12 +23,13 @@ profile::monitoring::sensu::agent::checks:
     subscribers:  ['metrics']
     handlers:     ['graphite_tcp']
 
+profile::base::selinux::manage_selinux:                             true
 profile::base::network::manage_dummy:                               true
 profile::highavailability::loadbalancing::haproxy::manage_haproxy:  true
 profile::highavailability::loadbalancing::haproxy::manage_firewall: true
 profile::highavailability::loadbalancing::haproxy::firewall_ports:
-  public:    ['5000', '8041', '8774', '8776', '9292', '9696', '80', '443', '6082']
-  internal:  ['5000', '8041', '8774', '8776', '9292', '9696', '35357']
+  public:    ['5000', '8041', '8774', '8776', '9292', '9696', '80', '443', '6082', '8080']
+  internal:  ['5000', '8041', '8774', '8776', '9292', '9696', '35357', '8080']
   mgmt:      ['9000']
 
 # HAproxy
@@ -56,15 +57,18 @@ profile::highavailability::loadbalancing::haproxy::haproxy_mapfile:
   public_domains:
     ensure: present
     mappings:
-      - "api.%{hiera('domain_frontend')}:5000":         'bk_identity'
-      - "identity.api.%{hiera('domain_public')}:5000":  'bk_identity'
-      - "network.api.%{hiera('domain_public')}:9696":   'bk_network'
-      - "metric.api.%{hiera('domain_public')}:8041":    'bk_metric'
-      - "compute.api.%{hiera('domain_public')}:8774":   'bk_compute'
-      - "volume.api.%{hiera('domain_public')}:8776":    'bk_volume'
-      - "image.api.%{hiera('domain_public')}:9292":     'bk_image'
-      - "status.%{hiera('domain_frontend')}":           'bk_status'
-      - "console.%{hiera('domain_public')}:6082":       'bk_console'
+      - "api.%{hiera('domain_frontend')}:5000":             'bk_identity'
+      - "identity.api.%{hiera('domain_public')}:5000":      'bk_identity'
+      - "network.api.%{hiera('domain_public')}:9696":       'bk_network'
+      - "metric.api.%{hiera('domain_public')}:8041":        'bk_metric'
+      - "compute.api.%{hiera('domain_public')}:8774":       'bk_compute'
+      - "volume.api.%{hiera('domain_public')}:8776":        'bk_volume'
+      - "image.api.%{hiera('domain_public')}:9292":         'bk_image'
+      - "object.api.%{hiera('domain_public')}:8080":        'bk_object'
+      - "status.%{hiera('domain_frontend')}":               'bk_status'
+      - "console.%{hiera('domain_public')}:6082":           'bk_console'
+      - "access.%{hiera('domain_frontend')}":               'bk_access'
+      - "access-%{::location}.%{hiera('domain_frontend')}": 'bk_access'
   internal_domains:
     ensure: present
     mappings:
@@ -75,6 +79,7 @@ profile::highavailability::loadbalancing::haproxy::haproxy_mapfile:
       - "compute.%{hiera('domain_trp')}:8774":          'bk_compute'
       - "volume.%{hiera('domain_trp')}:8776":           'bk_volume'
       - "image.%{hiera('domain_trp')}:9292":            'bk_image'
+      - "object.%{hiera('domain_trp')}:8080":           'bk_object'
 
 # HAproxy backends: public, internal and haproxy monitor
 profile::highavailability::loadbalancing::haproxy::haproxy_frontends:
@@ -82,6 +87,7 @@ profile::highavailability::loadbalancing::haproxy::haproxy_frontends:
     bind:
       "%{::ipaddress_public1}:5000":  ['ssl', 'crt', "%{hiera('star_api_ssl_pem')}", 'crt', "%{hiera('api_ssl_pem')}"]
       "%{::ipaddress_public1}:8041":  ['ssl', 'crt', "%{hiera('star_api_ssl_pem')}"]
+      "%{::ipaddress_public1}:8080":  ['ssl', 'crt', "%{hiera('star_api_ssl_pem')}"]
       "%{::ipaddress_public1}:8774":  ['ssl', 'crt', "%{hiera('star_api_ssl_pem')}"]
       "%{::ipaddress_public1}:8776":  ['ssl', 'crt', "%{hiera('star_api_ssl_pem')}"]
       "%{::ipaddress_public1}:9292":  ['ssl', 'crt', "%{hiera('star_api_ssl_pem')}"]
@@ -90,12 +96,12 @@ profile::highavailability::loadbalancing::haproxy::haproxy_frontends:
       "%{::ipaddress_public1}:80":    []
       "%{::ipaddress_public1}:6082":  ['ssl', 'crt', "%{hiera('console_ssl_pem')}"]
     options:
-      - use_backend:    '%[req.hdr(host),lower,map(/etc/haproxy/public_domains.map)]'
       - capture:        'request header Host len 64' #for debug
       - http-request:
         - 'add-header X-Forwarded-Proto https if { ssl_fc }'
         - 'set-header X-Forwarded-Port %[dst_port]'
       - redirect:       'scheme https if !{ ssl_fc }' # redirect all to https (only port 80)
+      - use_backend:    '%[req.hdr(host),lower,map(/etc/haproxy/public_domains.map)]'
   frontend_internal:
     bind:
       "%{::ipaddress_trp1}:35357": [] # keystone-admin
@@ -105,9 +111,10 @@ profile::highavailability::loadbalancing::haproxy::haproxy_frontends:
       "%{::ipaddress_trp1}:8776":  [] # volume
       "%{::ipaddress_trp1}:9292":  [] # image
       "%{::ipaddress_trp1}:9696":  [] # neutron
+      "%{::ipaddress_trp1}:8080":  [] # object
     options:
-      - use_backend:    '%[req.hdr(host),lower,map(/etc/haproxy/internal_domains.map)]'
       - capture:        'request header Host len 64' #for debug
+      - use_backend:    '%[req.hdr(host),lower,map(/etc/haproxy/internal_domains.map)]'
   frontend_monitor:
     options:
       stats:
@@ -146,6 +153,9 @@ profile::highavailability::loadbalancing::haproxy::haproxy_backends:
     options:
       - option:       'httplog'
       - errorfile:    '503 /etc/haproxy/error.api.http'
+  bk_object:
+    options:
+      - option:       'httplog'
   bk_status:
     options:
       - option:       'httplog'
@@ -153,6 +163,9 @@ profile::highavailability::loadbalancing::haproxy::haproxy_backends:
     options:
       - option:       'httplog'
       - errorfile:    '503 /etc/haproxy/error.api.http'
+  bk_access:
+    options:
+      - option:       'httplog'
 
 # Servers for backends. This will be merged and can should be overridden i location
 profile::highavailability::loadbalancing::haproxy::haproxy_balancermembers:
@@ -192,6 +205,22 @@ profile::highavailability::loadbalancing::haproxy::haproxy_balancermembers:
     ipaddresses:        ["%{hiera('netcfg_trp_netpart')}.36"]
     ports:              '9292'
     options:            'check'
+  object:
+    listening_service:  'bk_object'
+    server_names:
+      - '%{::location}-object-01'
+      - '%{::location}-object-02'
+      - '%{::location}-object-03'
+      - '%{::location}-object-04'
+      - '%{::location}-object-05'
+    ipaddresses:
+      - "%{hiera('netcfg_trp_netpart')}.119"
+      - "%{hiera('netcfg_trp_netpart')}.120"
+      - "%{hiera('netcfg_trp_netpart')}.121"
+      - "%{hiera('netcfg_trp_netpart')}.122"
+      - "%{hiera('netcfg_trp_netpart')}.123"
+    ports:              '8080'
+    options:            'check'
   status:
     listening_service:  'bk_status'
     server_names:       ['%{::location}-status-01']
@@ -204,6 +233,47 @@ profile::highavailability::loadbalancing::haproxy::haproxy_balancermembers:
     ipaddresses:        ["%{hiera('netcfg_trp_netpart')}.61"]
     ports:              '6082'
     options:            'check'
+  access:
+    listening_service:  'bk_access'
+    server_names:       ['%{::location}-access-01']
+    ipaddresses:        ["%{hiera('netcfg_trp_netpart')}.56"]
+    ports:              '80'
+    options:            'check'
+
+# SELinux - open ports for HAproxy
+profile::base::selinux::ports:
+  identity-http:
+    seltype:  'http_port_t'
+    protocol: 'tcp'
+    port:     5000
+  network-http:
+    seltype:  'http_port_t'
+    protocol: 'tcp'
+    port:     9696
+  metric-http:
+    seltype:  'http_port_t'
+    protocol: 'tcp'
+    port:     8041
+  compute-http:
+    seltype:  'http_port_t'
+    protocol: 'tcp'
+    port:     8774
+  volume-http:
+    seltype:  'http_port_t'
+    protocol: 'tcp'
+    port:     8776
+  image-http:
+    seltype:  'http_port_t'
+    protocol: 'tcp'
+    port:     9292
+  status-http:
+    seltype:  'http_port_t'
+    protocol: 'tcp'
+    port:     8080
+  console-http:
+    seltype:  'http_port_t'
+    protocol: 'tcp'
+    port:     6082
 
 # Errorpage for api, not used for status!
 profile::highavailability::loadbalancing::haproxy::haproxy_errorpage:

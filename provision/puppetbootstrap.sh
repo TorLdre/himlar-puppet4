@@ -63,6 +63,8 @@ bootstrap_puppet()
     yum clean all
     yum -y update
     yum install -y puppet-agent rubygems git vim inotify-tools
+    # Remove default version 3 hiera.yaml
+    rm -f /etc/puppetlabs/puppet/hiera.yaml
   fi
 
   if command -v apt-get >/dev/null 2>&1; then

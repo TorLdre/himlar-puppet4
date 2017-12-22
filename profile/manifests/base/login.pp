@@ -18,12 +18,12 @@ class profile::base::login (
 
   include googleauthenticator::pam::common
 
-  $pam_modes = lookup('googleauthenticator::pam::mode::modes', Hash, 'deep', {})
+  $pam_modes = lookup('googleauthenticator::pam::mode::modes', Hash, 'first', {})
   if $pam_modes {
     create_resources('googleauthenticator::pam::mode', $pam_modes)
   }
 
-  $pam_modules = lookup('googleauthenticator::pam::modules', Hash, 'deep', {})
+  $pam_modules = lookup('googleauthenticator::pam::modules', Hash, 'first', {})
   if $pam_modules {
     create_resources('googleauthenticator::pam', $pam_modules)
   }

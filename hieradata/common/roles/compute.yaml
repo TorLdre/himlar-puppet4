@@ -138,7 +138,7 @@ profile::base::yumrepo::repo_hash:
 # Compute nodes need only admin and cinder keys
 ceph::profile::params::client_keys:
   'client.admin':
-    secret: "%{hiera('client.admin::secret')}"
+    secret: "%{hiera('client_admin::secret')}"
     mode: '0600'
     user: 'ceph'
     group: 'ceph'
@@ -146,7 +146,7 @@ ceph::profile::params::client_keys:
     cap_osd: 'allow *'
     cap_mds: 'allow *'
   'client.cinder':
-    secret: "%{hiera('client.cinder::secret')}"
+    secret: "%{hiera('client_cinder::secret')}"
     mode: '0600'
     user: 'nova'
     group: 'nova'
