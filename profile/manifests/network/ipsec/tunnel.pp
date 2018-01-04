@@ -28,7 +28,7 @@ define profile::network::ipsec::tunnel (
     content  => template("${module_name}/network/ipsec_secret.erb"),
     notify   => Service['ipsec']
   }
-  file { "{$name}.conf":
+  file { "${name}.conf":
     ensure   => present,
     mode     => '0600',
     owner    => 'root',
